@@ -18,6 +18,6 @@ public class Indexer {
     }
 
     public void Indexer() {
-        m_Indexer = new TalonFX(Constants.IndexerMotor);
+        m_Indexer = new TalonFX(Constants.Ports.indexerMotor);
     }
 }
