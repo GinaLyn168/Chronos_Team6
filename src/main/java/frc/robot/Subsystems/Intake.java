@@ -1,5 +1,7 @@
 package frc.robot.Subsystems;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+
+import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
@@ -20,47 +22,32 @@ public class Intake extends SubsystemBase{
 
     private IntakeStates currentState = IntakeStates.OFF;
 
-    private TalonFX intakeLeaderM;
-
-    // private TalonFX intakeFollowerM;
-    // private TalonFX serialM;
+    private TalonFX intakeM;
 
     public Intake() {
         // Rollers
-        // intakeLeaderM = new TalonFX(Constants.HardwarePorts.intakeLeaderM);
-        // intakeFollowerM = new TalonFX(Constants.HardwarePorts.intakeFollowerM);
-        // configMotor(intakeLeaderM);
-        // configMotor(intakeFollowerM);
-        // intakeFollowerM.setInverted(true);
-
-        // Serial
-        // serialM = new TalonFX(Constants.HardwarePorts.serialM);
-        // configMotor(serialM, false);
+        intakeM = new TalonFX(Constants.Ports.intakeM);
+        configMotor(intakeM);
+        // intakeFollowerM.setInverted(true); ???
     }
 
     private void configMotor(TalonFX motor) {
+        TalonFXConfiguration config = new TalonFXConfiguration();
+        CurrentLimitsConfigs currentLimitsConfigs = new CurrentLimitsConfigs();
+        config.MotorOutput.NeutralMode = NeutralModeValue.Coast;
+        config.OpenLoopRamps.DutyCycleOpenLoopRampPeriod = 0.5;
+                config.OpenLoopRamps.DutyCycleOpenLoopRampPeriod = 0.5;
 
-        // TalonFXConfiguration config = new TalonFXConfiguration();
-        // CurrentLimitsConfigs currentLimitsConfigs = new CurrentLimitsConfigs();
-
-        // currentLimitsConfigs.SupplyCurrentLimit = Constants.intakeContinuousCurrentLimit;
-        // currentLimitsConfigs.SupplyCurrentLimitEnable = true;
-        // currentLimitsConfigs.SupplyCurrentThreshold = Constants.intakePeakCurrentLimit;
-        // config.MotorOutput.NeutralMode = NeutralModeValue.Coast;
-        // config.OpenLoopRamps.DutyCycleOpenLoopRampPeriod = 0.5;
-
-        // Slot0Configs slot0Configs = new Slot0Configs();
-
-        // config.CurrentLimits = currentLimitsConfigs;
-        // motor.getConfigurator().apply(config);
+        config.CurrentLimits = currentLimitsConfigs;
+        motor.getConfigurator().apply(config);
     }
 
     private void configMotor(TalonFX motor, boolean inverted) {
-        // motor.setInverted(false);
+        motor.setInverted(false);
     }
 
     public double getMotorVoltage() {
-        // return intakeLeaderM.getMotorVoltage().getValueAsDouble();
+        return intakeM.getMotorVoltage().getValueAsDouble();
     }
 
     public enum IntakeStates {
@@ -82,17 +69,14 @@ public class Intake extends SubsystemBase{
         }
     }
 
-    public void setSpeed(IntakeStates state) {
-        // intakeLeaderM.setControl(dutyCycleRequest.withOutput(state.speed));
-        
-        // intakeFollowerM.setControl(follow);
-        // serialM.set(state.serialSpeed);
-        // currentState = state;
-    }
+    // public void setSpeed(IntakeStates state) {
+    //     intakeM.setControl(dutyCycleRequest.withOutput(state.speed));
+    //     currentState = state;
+    // }
 
     @Override
     public void periodic() {
-        // SmartDashboard.putBoolean("Intake/Intake On", intakeLeaderM.getMotorVoltage().getValueAsDouble() > 2);
+        //
     }
 
     @Override
