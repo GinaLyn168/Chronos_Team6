@@ -69,10 +69,10 @@ public class Intake extends SubsystemBase{
         }
     }
 
-    // public void setSpeed(IntakeStates state) {
-    //     intakeM.setControl(dutyCycleRequest.withOutput(state.speed));
-    //     currentState = state;
-    // }
+    public void setSpeed(IntakeStates state) {
+        // intakeM.setControl(dutyCycleRequest.withOutput(state.speed));
+        currentState = state;
+    }
 
     @Override
     public void periodic() {
