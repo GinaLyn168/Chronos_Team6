@@ -28,7 +28,6 @@ public class Intake extends SubsystemBase{
         // Rollers
         intakeM = new TalonFX(Constants.Ports.intakeM);
         configMotor(intakeM);
-        // intakeFollowerM.setInverted(true); ???
     }
 
     private void configMotor(TalonFX motor) {
@@ -36,7 +35,6 @@ public class Intake extends SubsystemBase{
         CurrentLimitsConfigs currentLimitsConfigs = new CurrentLimitsConfigs();
         config.MotorOutput.NeutralMode = NeutralModeValue.Coast;
         config.OpenLoopRamps.DutyCycleOpenLoopRampPeriod = 0.5;
-                config.OpenLoopRamps.DutyCycleOpenLoopRampPeriod = 0.5;
 
         config.CurrentLimits = currentLimitsConfigs;
         motor.getConfigurator().apply(config);
@@ -51,28 +49,26 @@ public class Intake extends SubsystemBase{
     }
 
     public enum IntakeStates {
-        ON(0.45, 0.85),
-        INDEX(0.5, 0.5),
-        OFF(0, 0),
-        REV(-0.4, -0.8);
+        ON(0.45),
+        INDEX(0.5),
+        OFF(0),
+        REV(-0.4);
 
         private double speed;
-        private double serialSpeed;
 
         public double getValue() {
             return speed;
         }
 
-        IntakeStates(double speed, double serialSpeed) {
+        IntakeStates(double speed) {
             this.speed = speed;
-            this.serialSpeed = serialSpeed;
         }
     }
 
-    // public void setSpeed(IntakeStates state) {
-    //     intakeM.setControl(dutyCycleRequest.withOutput(state.speed));
-    //     currentState = state;
-    // }
+    public void setSpeed(IntakeStates state) {
+        // intakeM.setControl(dutyCycleRequest.withOutput(state.speed));
+        currentState = state;
+    }
 
     @Override
     public void periodic() {
