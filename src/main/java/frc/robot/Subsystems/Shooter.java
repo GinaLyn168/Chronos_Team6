@@ -11,6 +11,8 @@ public class Shooter {
     private TalonFX m_ShooterLeader;
     private TalonFX m_ShooterFollower;
 
+    private ShooterState state;
+
     private static Shooter instance;
 
     public static Shooter getInstance() {
@@ -40,7 +42,30 @@ public class Shooter {
         motor.getConfigurator().apply(config);
     }
 
+    public void setState(ShooterState state) {
+        this.state = state;
+    }
+
+    public ShooterState getState() {
+        return state;
+    }
+
     public void setSpeed(double speed) {
         m_ShooterLeader.set(speed);
+    }
+
+    public enum ShooterState {
+        SHOOT(1.0),
+        STANDBY(0.0);
+
+        private double speed;
+
+        public double getValue() {
+            return speed;
+        }
+
+        ShooterState(double speed) {
+            this.speed = speed;
+        }
     }
 }
