@@ -35,7 +35,7 @@ public class SetIntake extends Command {
 
     @Override
     public void execute() {
-        // Nothing needs to run repeatedly for this command
+        //
     }
 
     @Override
