@@ -26,7 +26,7 @@ public class Intake extends SubsystemBase{
 
     public Intake() {
         // Rollers
-        intakeM = new TalonFX(Constants.Ports.intakeM);
+        intakeM = new TalonFX(Constants.Ports.intake);
         configMotor(intakeM);
     }
 
