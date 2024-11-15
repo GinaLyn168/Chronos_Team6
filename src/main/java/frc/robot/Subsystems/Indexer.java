@@ -1,6 +1,7 @@
 package frc.robot.Subsystems;
 
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
+import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
@@ -12,7 +13,10 @@ public class Indexer extends SubsystemBase{
     //Max
     private static Indexer instance;
 
-    private TalonFX m_Indexer;
+    private TalonFX m_IndexerLeader;
+    private TalonFX m_IndexerFollower;
+
+    private Follower follow = new Follower(Constants.Ports.leftIndexer, false);
 
     private IndexerStates motorStates = IndexerStates.OFF;
 
@@ -24,8 +28,11 @@ public class Indexer extends SubsystemBase{
     }
 
     public void Indexer() {
-        m_Indexer = new TalonFX(Constants.Ports.indexerM);
-        configMotor(m_Indexer);
+        m_IndexerLeader = new TalonFX(Constants.Ports.leftIndexer);
+        m_IndexerFollower = new TalonFX(Constants.Ports.rightIndexer);
+        m_IndexerLeader.setControl(follow);
+        configMotor(m_IndexerLeader);
+        configMotor(m_IndexerFollower);
     }
 
     public enum IndexerStates {
@@ -52,19 +59,19 @@ public class Indexer extends SubsystemBase{
     }
 
     public double getMotorVoltage() {
-        return m_Indexer.getSupplyVoltage().getValueAsDouble();
+        return m_IndexerLeader.getSupplyVoltage().getValueAsDouble();
     }
 
     public double getMotorCurrent() {
-        return m_Indexer.getSupplyCurrent().getValueAsDouble();
+        return m_IndexerLeader.getSupplyCurrent().getValueAsDouble();
     }
 
     public void setSpeed(double speed) {
-        m_Indexer.set(speed);
+        m_IndexerLeader.set(speed);
     }
 
     public void setSpeed(IndexerStates states) {
-        m_Indexer.set(states.getSpeed());
+        m_IndexerLeader.set(states.getSpeed());
     }
 
     @Override
