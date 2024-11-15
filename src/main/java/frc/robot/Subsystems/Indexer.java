@@ -6,6 +6,7 @@ import com.ctre.phoenix6.signals.NeutralModeValue;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Indexer extends SubsystemBase{
     //Max
@@ -50,11 +51,24 @@ public class Indexer extends SubsystemBase{
         motor.getConfigurator().apply(config);
     }
 
+    public double getMotorVoltage() {
+        return m_Indexer.getSupplyVoltage().getValueAsDouble();
+    }
+
+    public double getMotorCurrent() {
+        return m_Indexer.getSupplyCurrent().getValueAsDouble();
+    }
+
     public void setSpeed(double speed) {
         m_Indexer.set(speed);
     }
 
     public void setSpeed(IndexerStates states) {
         m_Indexer.set(states.getSpeed());
+    }
+
+    @Override
+    public void periodic() {
+        SmartDashboard.putNumber("Indexer Motor Current", getMotorCurrent());
     }
 }
