@@ -22,8 +22,8 @@ public class Shooter {
     }
 
     public Shooter() {
-        m_ShooterLeader = new TalonFX(Constants.Ports.shooterLeader);
-        m_ShooterFollower = new TalonFX(Constants.Ports.shooterFollower);
+        m_ShooterLeader = new TalonFX(Constants.Ports.shooterLeaderM);
+        m_ShooterFollower = new TalonFX(Constants.Ports.shooterFollowerM);
 
         configMotor(m_ShooterLeader, false);
         configMotor(m_ShooterFollower, false);

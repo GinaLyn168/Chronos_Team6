@@ -24,7 +24,7 @@ public class Indexer extends SubsystemBase{
     }
 
     public void Indexer() {
-        m_Indexer = new TalonFX(Constants.Ports.indexerMotor);
+        m_Indexer = new TalonFX(Constants.Ports.indexerM);
         configMotor(m_Indexer);
     }
 
