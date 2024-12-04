@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Commands.Indexer.MoveIndexer;
 import frc.robot.Commands.Intake.SetIntake;
+import frc.robot.Subsystems.CommandSwerveDriveTrain;
 import frc.robot.Subsystems.Indexer;
 import frc.robot.Subsystems.Intake;
 import frc.robot.Subsystems.Indexer.IndexerStates;
@@ -25,6 +26,8 @@ public class RobotContainer {
     }
     return container;
   }
+  
+  private final CommandSwerveDriveTrain drivetrain = CommandSwerveDriveTrain.getInstance(); // Drivetrain
 
   /* Driver Buttons */
   private final Trigger driverBack = driver.back();

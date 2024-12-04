@@ -50,6 +50,10 @@ public class Shooter {
         return state;
     }
 
+    public double getSpeed() {
+        return m_ShooterLeader.getSupplyVoltage().getValueAsDouble();
+    }
+
     public void setSpeed(double speed) {
         m_ShooterLeader.set(speed);
     }
