@@ -46,11 +46,11 @@ public class RobotContainer {
 
   public RobotContainer() {
     configureBindings();
-    driver.a().onTrue(new MoveIndexer(IndexerStates.ON));
-    driver.b().onTrue(new MoveIndexer(IndexerStates.REV));
-    driver.x().onTrue(new MoveIndexer(IndexerStates.OFF));
+    driver.a().onTrue(new MoveIndexer(IndexerStates.ON, 1));
+    driver.b().onTrue(new MoveIndexer(IndexerStates.REV, 1));
+    driver.x().onTrue(new MoveIndexer(IndexerStates.OFF, 1));
     driver.y().onTrue(new SetIntake(IntakeStates.ON, 1));
-    driver.rightBumper().onTrue(new SetIntake(IntakeStates.OFF, 1));
+    driver.rightBumper().onTrue(new SetIntake(IntakeStates.REV, 1));
     driver.leftBumper().onTrue(new SetIntake(IntakeStates.OFF, 1));
   }
   private void configureBindings() {}
