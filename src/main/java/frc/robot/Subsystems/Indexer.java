@@ -27,10 +27,10 @@ public class Indexer extends SubsystemBase{
         return instance;
     }
 
-    public void Indexer() {
+    public Indexer() {
         m_IndexerLeader = new TalonFX(Constants.Ports.leftIndexer);
         m_IndexerFollower = new TalonFX(Constants.Ports.rightIndexer);
-        m_IndexerLeader.setControl(follow);
+        m_IndexerFollower.setControl(follow);
         configMotor(m_IndexerLeader);
         configMotor(m_IndexerFollower);
     }

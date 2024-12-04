@@ -40,11 +40,11 @@ public class SetIntake extends Command {
 
     @Override
     public void end(boolean interrupted) {
-        s_Intake.setSpeed(Intake.IntakeStates.OFF);
+
     }
 
     @Override
     public boolean isFinished() { // Chronos no sensor????
-        return timer.hasElapsed(time);
+        return true;
     }
 }

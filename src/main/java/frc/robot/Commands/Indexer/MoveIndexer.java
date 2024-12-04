@@ -24,11 +24,11 @@ public class MoveIndexer extends Command {
 
     @Override
     public void end(boolean Interrupted) {
-        s_indexer.setSpeed(0);
+        
     }
 
     @Override
     public boolean isFinished() {
-        return false;
+        return true;
     }
 }

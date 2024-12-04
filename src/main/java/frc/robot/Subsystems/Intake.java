@@ -56,7 +56,7 @@ public class Intake extends SubsystemBase{
 
         private double speed;
 
-        public double getValue() {
+        public double getSpeed() {
             return speed;
         }
 
@@ -68,6 +68,7 @@ public class Intake extends SubsystemBase{
     public void setSpeed(IntakeStates state) {
         // intakeM.setControl(dutyCycleRequest.withOutput(state.speed));
         currentState = state;
+        intakeM.set(state.getSpeed());
     }
 
     @Override
