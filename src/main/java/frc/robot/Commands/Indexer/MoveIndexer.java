@@ -36,6 +36,6 @@ public class MoveIndexer extends Command {
 
     @Override
     public boolean isFinished() {
-        return timer.hasElapsed(time);
+        return true;
     }
 }
