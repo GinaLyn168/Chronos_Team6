@@ -45,6 +45,7 @@ public class RobotContainer {
     configureBindings();
     driver.a().onTrue(new MoveIndexer(IndexerStates.ON));
     driver.b().onTrue(new MoveIndexer(IndexerStates.REV));
+    driver.x().onTrue(new MoveIndexer(IndexerStates.OFF));
   }
   private void configureBindings() {}
 
