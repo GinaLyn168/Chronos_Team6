@@ -9,8 +9,11 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Commands.Indexer.MoveIndexer;
+import frc.robot.Commands.Intake.SetIntake;
 import frc.robot.Subsystems.Indexer;
+import frc.robot.Subsystems.Intake;
 import frc.robot.Subsystems.Indexer.IndexerStates;
+import frc.robot.Subsystems.Intake.IntakeStates;
 
 public class RobotContainer {
 
@@ -46,6 +49,9 @@ public class RobotContainer {
     driver.a().onTrue(new MoveIndexer(IndexerStates.ON));
     driver.b().onTrue(new MoveIndexer(IndexerStates.REV));
     driver.x().onTrue(new MoveIndexer(IndexerStates.OFF));
+    driver.y().onTrue(new SetIntake(IntakeStates.ON, 1));
+    driver.rightBumper().onTrue(new SetIntake(IntakeStates.OFF, 1));
+    driver.leftBumper().onTrue(new SetIntake(IntakeStates.OFF, 1));
   }
   private void configureBindings() {}
 
