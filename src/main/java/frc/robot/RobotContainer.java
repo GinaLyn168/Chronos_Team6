@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.Commands.Drivetrain.SlowDrive;
 import frc.robot.Commands.Indexer.MoveIndexer;
 import frc.robot.Commands.Intake.SetIntake;
 import frc.robot.Commands.Shooter.SetShooter;
@@ -75,10 +76,10 @@ public class RobotContainer {
     driver.b().onTrue(new MoveIndexer(IndexerStates.REV, 1));
     driver.x().onTrue(new MoveIndexer(IndexerStates.OFF, 1));
     driver.y().onTrue(new SetIntake(IntakeStates.ON, 1));
-    driver.rightBumper().onTrue(new SetIntake(IntakeStates.REV, 1));
     driver.leftBumper().onTrue(new SetIntake(IntakeStates.OFF, 1));
     driver.rightTrigger().onTrue(new SetShooter(ShooterState.SHOOT));
-    driver.leftTrigger().onTrue(new SetShooter(ShooterState.STANDBY));
+    driver.rightBumper().onTrue(new SetShooter(ShooterState.STANDBY));
+    driver.leftTrigger().whileTrue(new SlowDrive());
     
         
     /*
