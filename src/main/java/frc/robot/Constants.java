@@ -1,7 +1,9 @@
 package frc.robot;
 
 public class Constants {
-
+    public static double MaxSpeed = 6; //can be lowered during testing
+    public static double MaxAngularRate = 3 * Math.PI; // 3/4 of a rotation per second max angular velocity
+    
     public class Ports {
         // public static final int indexerM = 14;
         
