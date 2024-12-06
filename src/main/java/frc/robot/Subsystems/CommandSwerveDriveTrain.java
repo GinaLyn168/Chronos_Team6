@@ -1,11 +1,14 @@
 package frc.robot.Subsystems;
 
+import java.util.function.Supplier;
+
 import com.ctre.phoenix6.Utils;
 import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveDrivetrain;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveDrivetrainConstants;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveModule;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveModuleConstants;
+import com.ctre.phoenix6.mechanisms.swerve.SwerveRequest;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
@@ -14,6 +17,7 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.Notifier;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.Generated.TunerConstants;
 
@@ -25,8 +29,6 @@ public class CommandSwerveDriveTrain extends SwerveDrivetrain implements Subsyst
     private double lastTimeReset = -1;
 
     private static CommandSwerveDriveTrain instance = TunerConstants.DriveTrain;
-
-    Vision m_Camera;
 
     private Field2d m_field = new Field2d();
 
@@ -55,8 +57,6 @@ public class CommandSwerveDriveTrain extends SwerveDrivetrain implements Subsyst
 
     public CommandSwerveDriveTrain(SwerveDrivetrainConstants driveTrainConstants, double OdometryUpdateFrequency, SwerveModuleConstants... modules) {
         super(driveTrainConstants, OdometryUpdateFrequency, modules);
-        
-        m_Camera = Vision.getInstance();
 
         if (Utils.isSimulation()) {
             startSimThread();
@@ -69,6 +69,10 @@ public class CommandSwerveDriveTrain extends SwerveDrivetrain implements Subsyst
             startSimThread();
         }
         limit();
+    }
+
+    public Command applyRequest(Supplier<SwerveRequest> requestSupplier) {
+        return run(() -> this.setControl(requestSupplier.get()));
     }
     
     private void startSimThread() {
@@ -134,18 +138,8 @@ public class CommandSwerveDriveTrain extends SwerveDrivetrain implements Subsyst
 
     public void updateOdometryByVision(){
         Pose3d poseFromVision = null;
-        try {
-            if (m_Camera != null){
-                 poseFromVision = m_Camera.calculatePoseFromVision();
-            } else {
-                m_Camera = Vision.getInstance(); // this literally should be already initialized but here we are
-                poseFromVision = m_Camera.calculatePoseFromVision();
-            }
-        } catch (Exception e) {
-           System.out.println(e);
-        }
         if(poseFromVision != null){
-            instance.m_odometry.addVisionMeasurement(poseFromVision.toPose2d(), Logger.getRealTimestamp()); //Timer.getFPGATimestamp()
+            //instance.m_odometry.addVisionMeasurement(poseFromVision.toPose2d(), Logger.getRealTimestamp()); //Timer.getFPGATimestamp()
             //TODO: add our own timer
         }
        else { System.out.println("poseFromVision was null");}
