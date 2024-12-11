@@ -30,6 +30,7 @@ import frc.robot.Subsystems.Shooter.ShooterState;
 import frc.robot.Constants;
 
 public class RobotContainer {
+  public final CommandXboxController driver = new CommandXboxController(0); // Driver joystick
   private double MaxSpeed = TunerConstants.kSpeedAt12VoltsMps; // kSpeedAt12VoltsMps desired top speed
   private double MaxAngularRate = 1.5 * Math.PI; // 3/4 of a rotation per second max angular velocity
 
@@ -65,7 +66,6 @@ public class RobotContainer {
     joystick.b().whileTrue(drivetrain
         .applyRequest(() -> point.withModuleDirection(new Rotation2d(-joystick.getLeftY(), -joystick.getLeftX()))));
 
-  public void configureBindings() {
     driver.a().onTrue(new MoveIndexer(IndexerStates.ON, 1));
     driver.b().onTrue(new MoveIndexer(IndexerStates.REV, 1));
     driver.x().onTrue(new MoveIndexer(IndexerStates.OFF, 1));
@@ -86,10 +86,6 @@ public class RobotContainer {
       drivetrain.seedFieldRelative(new Pose2d(new Translation2d(), Rotation2d.fromDegrees(90)));
     }
     drivetrain.registerTelemetry(logger::telemeterize);
-  }
-
-  public RobotContainer() {
-    configureBindings();
   }
 
   public Command getAutonomousCommand() {
