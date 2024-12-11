@@ -19,7 +19,7 @@ import frc.robot.Commands.Drivetrain.SlowDrive;
 import frc.robot.Commands.Indexer.MoveIndexer;
 import frc.robot.Commands.Intake.SetIntake;
 import frc.robot.Commands.Shooter.SetShooter;
-import frc.robot.Subsystems.CommandSwerveDriveTrain;
+import frc.robot.Subsystems.CommandSwerveDrivetrain;
 import frc.robot.Subsystems.Indexer;
 import frc.robot.Subsystems.Intake;
 import frc.robot.Subsystems.Indexer.IndexerStates;
@@ -38,7 +38,7 @@ public class RobotContainer {
     return container;
   }
   
-  private final CommandSwerveDriveTrain drivetrain = CommandSwerveDriveTrain.getInstance(); // Drivetrain
+  private final CommandSwerveDrivetrain Drivetrain = CommandSwerveDrivetrain.getInstance(); // Drivetrain
   
     private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
             .withDeadband(Constants.MaxSpeed * translationDeadband).withRotationalDeadband(Constants.MaxAngularRate * rotDeadband)
@@ -70,15 +70,16 @@ public class RobotContainer {
 
   private final Indexer s_Indexer = Indexer.getInstance();
 
-  public RobotContainer() {
-    configureBindings();
+  public void configureBindings() {
     driver.a().onTrue(new MoveIndexer(IndexerStates.ON, 1));
     driver.b().onTrue(new MoveIndexer(IndexerStates.REV, 1));
     driver.x().onTrue(new MoveIndexer(IndexerStates.OFF, 1));
+
     driver.povUp().onTrue(new SetIntake(IntakeStates.ON, 1));
     driver.povLeft().onTrue(new SetIntake(IntakeStates.INDEX, 1));
     driver.povRight().onTrue(new SetIntake(IntakeStates.REV, 1));
     driver.povDown().onTrue(new SetIntake(IntakeStates.OFF, 1));
+
     driver.leftBumper().onTrue(new SetShooter(ShooterState.SHOOT));
     driver.rightBumper().onTrue(new SetShooter(ShooterState.STANDBY));
     driver.leftTrigger().whileTrue(new SlowDrive());
@@ -87,19 +88,22 @@ public class RobotContainer {
     /*
       * Drivetrain bindings
       */
-    drivetrain.setDefaultCommand( // Drivetrain will execute this command periodically
-      drivetrain.applyRequest(() -> drive.withVelocityX(-driver.getLeftY() * Constants.MaxSpeed) // Drive forward with
+    Drivetrain.setDefaultCommand( // Drivetrain will execute this command periodically
+      Drivetrain.applyRequest(() -> drive.withVelocityX(-driver.getLeftY() * Constants.MaxSpeed) // Drive forward with
         // negative Y (forward)
         .withVelocityY(-driver.getLeftX() * Constants.MaxSpeed) // Drive left with negative X (left)
         .withRotationalRate(-driver.getRightX() * Constants.MaxAngularRate) // Drive counterclockwise with negative X (left)
       ));
 
     // reset the field-centric heading. AKA reset odometry
-    driverBack.onTrue(new InstantCommand(() -> drivetrain.resetOdo(/*new Pose2d(0, 0, new Rotation2d())*/)));
+    driverBack.onTrue(new InstantCommand(() -> Drivetrain.resetOdo(/*new Pose2d(0, 0, new Rotation2d())*/)));
   }
-  private void configureBindings() {}
 
   public Command getAutonomousCommand() {
     return Commands.print("No autonomous command configured");
+  }
+
+  public RobotContainer() {
+    configureBindings();
   }
 }

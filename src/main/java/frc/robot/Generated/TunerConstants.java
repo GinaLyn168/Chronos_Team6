@@ -8,7 +8,7 @@ import com.ctre.phoenix6.mechanisms.swerve.SwerveModule.ClosedLoopOutputType;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveModuleConstants.SteerFeedbackType;
 
 import edu.wpi.first.math.util.Units;
-import frc.robot.Subsystems.CommandSwerveDriveTrain;
+import frc.robot.Subsystems.CommandSwerveDrivetrain;
 
 import frc.robot.Constants;
 
@@ -136,6 +136,6 @@ public class TunerConstants {
     public static final SwerveModuleConstants BackRight = ConstantCreator.createModuleConstants(
             kBackRightSteerMotorId, kBackRightDriveMotorId, kBackRightEncoderId, kBackRightEncoderOffset, Units.inchesToMeters(kBackRightXPosInches), Units.inchesToMeters(kBackRightYPosInches), kInvertRightSide);
 
-    public static final CommandSwerveDriveTrain DriveTrain = new CommandSwerveDriveTrain(DrivetrainConstants, FrontLeft,
+    public static final CommandSwerveDrivetrain Drivetrain = new CommandSwerveDrivetrain(DrivetrainConstants, FrontLeft,
             FrontRight, BackLeft, BackRight);
 }

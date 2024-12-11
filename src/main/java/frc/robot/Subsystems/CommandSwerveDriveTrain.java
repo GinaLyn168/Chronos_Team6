@@ -21,20 +21,20 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.Generated.TunerConstants;
 
-public class CommandSwerveDriveTrain extends SwerveDrivetrain implements Subsystem {
+public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsystem {
     private static final double kSimLoopPeriod = 0.005; // 5 ms
     private Notifier m_simNotifier = null;
     private double m_lastSimTime;
     
     private double lastTimeReset = -1;
 
-    private static CommandSwerveDriveTrain instance = TunerConstants.DriveTrain;
+    private static CommandSwerveDrivetrain instance = TunerConstants.Drivetrain;
 
     private Field2d m_field = new Field2d();
 
-    public static CommandSwerveDriveTrain getInstance() {
+    public static CommandSwerveDrivetrain getInstance() {
         if (instance == null) {
-            instance = new CommandSwerveDriveTrain(TunerConstants.DrivetrainConstants, 250, TunerConstants.FrontLeft,
+            instance = new CommandSwerveDrivetrain(TunerConstants.DrivetrainConstants, 250, TunerConstants.FrontLeft,
             TunerConstants.FrontRight, TunerConstants.BackLeft, TunerConstants.BackRight);
         }
 
@@ -55,16 +55,16 @@ public class CommandSwerveDriveTrain extends SwerveDrivetrain implements Subsyst
         }
     }
 
-    public CommandSwerveDriveTrain(SwerveDrivetrainConstants driveTrainConstants, double OdometryUpdateFrequency, SwerveModuleConstants... modules) {
-        super(driveTrainConstants, OdometryUpdateFrequency, modules);
+    public CommandSwerveDrivetrain(SwerveDrivetrainConstants DrivetrainConstants, double OdometryUpdateFrequency, SwerveModuleConstants... modules) {
+        super(DrivetrainConstants, OdometryUpdateFrequency, modules);
 
         if (Utils.isSimulation()) {
             startSimThread();
         }
         limit();
     }
-    public CommandSwerveDriveTrain(SwerveDrivetrainConstants driveTrainConstants, SwerveModuleConstants... modules) {
-        super(driveTrainConstants, modules);
+    public CommandSwerveDrivetrain(SwerveDrivetrainConstants DrivetrainConstants, SwerveModuleConstants... modules) {
+        super(DrivetrainConstants, modules);
         if (Utils.isSimulation()) {
             startSimThread();
         }
@@ -90,7 +90,7 @@ public class CommandSwerveDriveTrain extends SwerveDrivetrain implements Subsyst
         m_simNotifier.startPeriodic(kSimLoopPeriod);
     }
 
-    public void resetOdo(){ //not being used, drivetrain.seedFieldRelative() instead for field centric driving
+    public void resetOdo(){ //not being used, Drivetrain.seedFieldRelative() instead for field centric driving
         tareEverything();
         tareEverything();
         tareEverything();
