@@ -4,16 +4,18 @@
 
 package frc.robot;
 
-import com.ctre.phoenix6.mechanisms.swerve.SwerveModule.DriveRequestType;
+import com.ctre.phoenix6.Utils;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveRequest;
+import com.ctre.phoenix6.mechanisms.swerve.SwerveModule.DriveRequestType;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import frc.robot.Generated.TunerConstants;
+import frc.robot.Subsystems.CommandSwerveDrivetrain;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Commands.Drivetrain.SlowDrive;
 import frc.robot.Commands.Indexer.MoveIndexer;
@@ -28,8 +30,9 @@ import frc.robot.Subsystems.Shooter.ShooterState;
 import frc.robot.Constants;
 
 public class RobotContainer {
+  private double MaxSpeed = TunerConstants.kSpeedAt12VoltsMps; // kSpeedAt12VoltsMps desired top speed
+  private double MaxAngularRate = 1.5 * Math.PI; // 3/4 of a rotation per second max angular velocity
 
-  public final CommandXboxController driver = new CommandXboxController(0); // Driver joystick
   private RobotContainer container;
   public RobotContainer getInstance() {
     if (container == null) {
@@ -37,38 +40,30 @@ public class RobotContainer {
     }
     return container;
   }
-  
-  private final CommandSwerveDrivetrain Drivetrain = CommandSwerveDrivetrain.getInstance(); // Drivetrain
-  
-    private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
-            .withDeadband(Constants.MaxSpeed * translationDeadband).withRotationalDeadband(Constants.MaxAngularRate * rotDeadband)
-            .withDriveRequestType(DriveRequestType.OpenLoopVoltage); // I want field-centric
+  /* Setting up bindings for necessary control of the swerve drive platform */
+  private final CommandXboxController joystick = new CommandXboxController(0); // My joystick
+  private final CommandSwerveDrivetrain drivetrain = TunerConstants.DriveTrain; // My drivetrain
 
-    public static final double translationDeadband = 0.1;
-    public static final double rotDeadband = 0.1;
-    
+  private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
+      .withDeadband(MaxSpeed * 0.1).withRotationalDeadband(MaxAngularRate * 0.1) // Add a 10% deadband
+      .withDriveRequestType(DriveRequestType.OpenLoopVoltage); // I want field-centric
+                                                               // driving in open loop
+  private final SwerveRequest.SwerveDriveBrake brake = new SwerveRequest.SwerveDriveBrake();
+  private final SwerveRequest.PointWheelsAt point = new SwerveRequest.PointWheelsAt();
 
-    private final SwerveRequest.SwerveDriveBrake brake = new SwerveRequest.SwerveDriveBrake();
-    private final SwerveRequest.PointWheelsAt point = new SwerveRequest.PointWheelsAt();
-    //private final Telemetry logger = new Telemetry(Constants.MaxSpeed);
+  private final Telemetry logger = new Telemetry(MaxSpeed);
 
-  /* Driver Buttons */
-  private final Trigger driverBack = driver.back();
-  private final Trigger driverStart = driver.start();
-  private final Trigger driverA = driver.a();
-  private final Trigger driverB = driver.b();
-  private final Trigger driverX = driver.x();
-  private final Trigger driverY = driver.y();
-  private final Trigger driverRightBumper = driver.rightBumper();
-  private final Trigger driverLeftBumper = driver.rightBumper();
-  private final Trigger driverLeftTrigger = driver.leftTrigger();
-  private final Trigger driverRightTrigger = driver.rightTrigger();
-  private final Trigger driverDpadUp = driver.povUp();
-  private final Trigger driverDpadDown = driver.povDown();
-  private final Trigger driverDpadLeft = driver.povLeft();
-  private final Trigger driverDpadRight = driver.povRight();
+  private void configureBindings() {
+    drivetrain.setDefaultCommand( // Drivetrain will execute this command periodically
+        drivetrain.applyRequest(() -> drive.withVelocityX(-joystick.getLeftY() * MaxSpeed) // Drive forward with
+                                                                                           // negative Y (forward)
+            .withVelocityY(-joystick.getLeftX() * MaxSpeed) // Drive left with negative X (left)
+            .withRotationalRate(-joystick.getRightX() * MaxAngularRate) // Drive counterclockwise with negative X (left)
+        ));
 
-  private final Indexer s_Indexer = Indexer.getInstance();
+    joystick.a().whileTrue(drivetrain.applyRequest(() -> brake));
+    joystick.b().whileTrue(drivetrain
+        .applyRequest(() -> point.withModuleDirection(new Rotation2d(-joystick.getLeftY(), -joystick.getLeftX()))));
 
   public void configureBindings() {
     driver.a().onTrue(new MoveIndexer(IndexerStates.ON, 1));
@@ -84,19 +79,17 @@ public class RobotContainer {
     driver.rightBumper().onTrue(new SetShooter(ShooterState.STANDBY));
     driver.leftTrigger().whileTrue(new SlowDrive());
     
-        
-    /*
-      * Drivetrain bindings
-      */
-    Drivetrain.setDefaultCommand( // Drivetrain will execute this command periodically
-      Drivetrain.applyRequest(() -> drive.withVelocityX(-driver.getLeftY() * Constants.MaxSpeed) // Drive forward with
-        // negative Y (forward)
-        .withVelocityY(-driver.getLeftX() * Constants.MaxSpeed) // Drive left with negative X (left)
-        .withRotationalRate(-driver.getRightX() * Constants.MaxAngularRate) // Drive counterclockwise with negative X (left)
-      ));
+    // reset the field-centric heading on left bumper press
+    joystick.leftBumper().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldRelative()));
 
-    // reset the field-centric heading. AKA reset odometry
-    driverBack.onTrue(new InstantCommand(() -> Drivetrain.resetOdo(/*new Pose2d(0, 0, new Rotation2d())*/)));
+    if (Utils.isSimulation()) {
+      drivetrain.seedFieldRelative(new Pose2d(new Translation2d(), Rotation2d.fromDegrees(90)));
+    }
+    drivetrain.registerTelemetry(logger::telemeterize);
+  }
+
+  public RobotContainer() {
+    configureBindings();
   }
 
   public Command getAutonomousCommand() {
