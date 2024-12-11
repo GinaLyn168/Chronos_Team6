@@ -93,8 +93,8 @@ public class TunerConstants {
     // Front Left
     private static final int kFrontLeftDriveMotorId = Constants.Ports.frontLeftDrive;
     private static final int kFrontLeftSteerMotorId = Constants.Ports.frontLeftSteer;
-    private static final int kFrontLeftEncoderId = Constants.Ports.frontLeftCancoder;
-    private static final double kFrontLeftEncoderOffset = -0.24853; //-0.249267578125;
+    public static final int kFrontLeftEncoderId = Constants.Ports.frontLeftCancoder;
+    public static final double kFrontLeftEncoderOffset = -0.24853; //-0.249267578125;
 
     private static final double kFrontLeftXPosInches = 8.5;
     private static final double kFrontLeftYPosInches = 10;
@@ -102,8 +102,8 @@ public class TunerConstants {
     // Front Right
     private static final int kFrontRightDriveMotorId = Constants.Ports.frontRightDrive;
     private static final int kFrontRightSteerMotorId = Constants.Ports.frontRightSteer;
-    private static final int kFrontRightEncoderId = Constants.Ports.frontRightCancoder;
-    private static final double kFrontRightEncoderOffset = 0.413818; //0.417724609375; 
+    public static final int kFrontRightEncoderId = Constants.Ports.frontRightCancoder;
+    public static final double kFrontRightEncoderOffset = 0.413818; //0.417724609375; 
 
     private static final double kFrontRightXPosInches = 8.5;
     private static final double kFrontRightYPosInches = -10;
@@ -111,8 +111,8 @@ public class TunerConstants {
     // Back Left
     private static final int kBackLeftDriveMotorId = Constants.Ports.backLeftDrive;
     private static final int kBackLeftSteerMotorId = Constants.Ports.backLeftSteer;
-    private static final int kBackLeftEncoderId = Constants.Ports.backLeftCancoder;
-    private static final double kBackLeftEncoderOffset = 0.43725; //0.443115234375; 
+    public static final int kBackLeftEncoderId = Constants.Ports.backLeftCancoder;
+    public static final double kBackLeftEncoderOffset = 0.43725; //0.443115234375; 
 
     private static final double kBackLeftXPosInches = -8.5;
     private static final double kBackLeftYPosInches = 10;
@@ -120,8 +120,8 @@ public class TunerConstants {
     // Back Right
     private static final int kBackRightDriveMotorId = Constants.Ports.backRightDrive;
     private static final int kBackRightSteerMotorId = Constants.Ports.backRightSteer;
-    private static final int kBackRightEncoderId = Constants.Ports.backRightCancoder;
-    private static final double kBackRightEncoderOffset = 0.2041; //0.210693359375; 
+    public static final int kBackRightEncoderId = Constants.Ports.backRightCancoder;
+    public static final double kBackRightEncoderOffset = 0.2041; //0.210693359375; 
 
     private static final double kBackRightXPosInches = -8.5;
     private static final double kBackRightYPosInches = -10;                   

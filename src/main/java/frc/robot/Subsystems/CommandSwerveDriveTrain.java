@@ -163,48 +163,47 @@ public class CommandSwerveDriveTrain extends SwerveDrivetrain implements Subsyst
     //@Override
     //public void periodic() {
     //     //updateOdometryByVision();
-    //    Pose2d currPose = getPose();
+    //    //Pose2d currPose = getPose();
 //
-    //    Logger.recordOutput("SwerveStates/ModuleStates",  getModuleStates());
-    //    //allows driver to see if resetting worked
-    //    SmartDashboard.putBoolean("Odometry/Odo Reset (last 5 sec)", lastTimeReset != -1 && Timer.getFPGATimestamp() - lastTimeReset < 5);
-    //    SmartDashboard.putNumber("Odometry/ODO X", currPose.getX());
-    //    SmartDashboard.putNumber("Odometry/ODO Y", currPose.getY());
-    //    SmartDashboard.putNumber("Odometry/ODO ROT", currPose.getRotation().getRadians());
-    //    SmartDashboard.putNumber("Odometry/AUTO INIT X", autoStartPose.getX());
-    //    SmartDashboard.putNumber("Odometry/AUTO INIT Y", autoStartPose.getY());
-//
-    //    SmartDashboard.putNumber("DT Vel", robotAbsoluteVelocity());
-    //    m_field.setRobotPose(m_odometry.getEstimatedPosition());
-    //    SmartDashboard.putData("field", m_field); 
+    //    //Logger.recordOutput("SwerveStates/ModuleStates",  getModuleStates());
+    //    ////allows driver to see if resetting worked
+    //    //SmartDashboard.putBoolean("Odometry/Odo Reset (last 5 sec)", lastTimeReset != -1 && Timer.getFPGATimestamp() - lastTimeReset < 5);
+    //    //SmartDashboard.putNumber("Odometry/ODO X", currPose.getX());
+    //    //SmartDashboard.putNumber("Odometry/ODO Y", currPose.getY());
+    //    //SmartDashboard.putNumber("Odometry/ODO ROT", currPose.getRotation().getRadians());
+    //    //SmartDashboard.putNumber("Odometry/AUTO INIT X", autoStartPose.getX());
+    //    //SmartDashboard.putNumber("Odometry/AUTO INIT Y", autoStartPose.getY());
+////
+    //    //SmartDashboard.putNumber("DT Vel", robotAbsoluteVelocity());
+    //    //m_field.setRobotPose(m_odometry.getEstimatedPosition());
+    //    //SmartDashboard.putData("field", m_field); 
 //
     //    for(int i = 0; i < ModuleCount; i++){
     //        //Logger.recordOutput("Swerve/DriveMotor" + i, Modules[i].getDriveMotor().getVelocity().getValueAsDouble());
     //        //Logger.recordOutput("Swerve/CANcoder module " + i, Modules[i].getCANcoder().getAbsolutePosition().getValueAsDouble());
     //        //Logger.recordOutput("Swerve/CANCoder offset molule " + i, getOffset(i));
-    //        SmartDashboard.putNumber("CANcoder/CANcoder position module " + i, Modules[i].getCANcoder().getAbsolutePosition().getValueAsDouble());
-    //        //SmartDashboard.putNumber("CANCoder offset molule " + i, getOffset(i));
-    //        SmartDashboard.putNumber("MotorVelocity/drive motor velocity mod " + i, Modules[i].getDriveMotor().getVelocity().getValueAsDouble());
-    //        SmartDashboard.putNumber("MotorVelocity/Angle motor velocity mod " + i, Modules[i].getSteerMotor().getVelocity().getValueAsDouble());
+    //        //SmartDashboard.putNumber("CANcoder/CANcoder position module " + i, Modules[i].getCANcoder().getAbsolutePosition().getValueAsDouble());
+    //        ////SmartDashboard.putNumber("CANCoder offset molule " + i, getOffset(i));
+    //        //SmartDashboard.putNumber("MotorVelocity/drive motor velocity mod " + i, Modules[i].getDriveMotor().getVelocity().getValueAsDouble());
+    //        //SmartDashboard.putNumber("MotorVelocity/Angle motor velocity mod " + i, Modules[i].getSteerMotor().getVelocity().getValueAsDouble());
     //    }
 //
 //
     //}
 
-    // private double getOffset(int id) {
-    // if (id == 1) {
-    //     return TunerConstants.kFrontLeftEncoderOffset;
-    // }
-    // else if (id == 2) {
-    //     return TunerConstants.kFrontRightEncoderOffset;
-    // }
-    // else if (id == 3) {
-    //     return TunerConstants.kBackLeftEncoderOffset;
-    // }
-    // else {
-    //     return TunerConstants.kBackRightEncoderOffset;
-    // }
-//}
-
+    private double getOffset(int id) {
+    if (id == 1) {
+        return TunerConstants.kFrontLeftEncoderOffset;
+    }
+    else if (id == 2) {
+        return TunerConstants.kFrontRightEncoderOffset;
+    }
+    else if (id == 3) {
+        return TunerConstants.kBackLeftEncoderOffset;
+    }
+    else {
+        return TunerConstants.kBackRightEncoderOffset;
+    }
+    }
 }
 
