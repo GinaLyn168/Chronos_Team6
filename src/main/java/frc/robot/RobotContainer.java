@@ -75,9 +75,11 @@ public class RobotContainer {
     driver.a().onTrue(new MoveIndexer(IndexerStates.ON, 1));
     driver.b().onTrue(new MoveIndexer(IndexerStates.REV, 1));
     driver.x().onTrue(new MoveIndexer(IndexerStates.OFF, 1));
-    driver.y().onTrue(new SetIntake(IntakeStates.ON, 1));
-    driver.leftBumper().onTrue(new SetIntake(IntakeStates.OFF, 1));
-    driver.rightTrigger().onTrue(new SetShooter(ShooterState.SHOOT));
+    driver.povUp().onTrue(new SetIntake(IntakeStates.ON, 1));
+    driver.povLeft().onTrue(new SetIntake(IntakeStates.INDEX, 1));
+    driver.povRight().onTrue(new SetIntake(IntakeStates.REV, 1));
+    driver.povDown().onTrue(new SetIntake(IntakeStates.OFF, 1));
+    driver.leftBumper().onTrue(new SetShooter(ShooterState.SHOOT));
     driver.rightBumper().onTrue(new SetShooter(ShooterState.STANDBY));
     driver.leftTrigger().whileTrue(new SlowDrive());
     
@@ -93,7 +95,7 @@ public class RobotContainer {
       ));
 
     // reset the field-centric heading. AKA reset odometry
-    driverBack.onTrue(new InstantCommand(() -> drivetrain.resetOdo(new Pose2d(0, 0, new Rotation2d()))));
+    driverBack.onTrue(new InstantCommand(() -> drivetrain.resetOdo(/*new Pose2d(0, 0, new Rotation2d())*/)));
   }
   private void configureBindings() {}
 

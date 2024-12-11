@@ -96,30 +96,30 @@ public class CommandSwerveDriveTrain extends SwerveDrivetrain implements Subsyst
         tareEverything();
     }
 
-    public void resetOdoUtil(Pose2d pose){
-        try {
-            m_stateLock.writeLock().lock();
+    //public void resetOdoUtil(Pose2d pose){
+    //    try {
+    //        m_stateLock.writeLock().lock();
+//
+    //        for (int i = 0; i < ModuleCount; ++i) {
+    //            Modules[i].resetPosition();
+    //            m_modulePositions[i] = Modules[i].getPosition(true);
+    //        }
+    //        m_odometry.resetPosition(Rotation2d.fromDegrees(m_yawGetter.getValue()), m_modulePositions, pose);
+    //    } finally {
+    //        m_stateLock.writeLock().unlock();
+    //    }
+    //}
 
-            for (int i = 0; i < ModuleCount; ++i) {
-                Modules[i].resetPosition();
-                m_modulePositions[i] = Modules[i].getPosition(true);
-            }
-            m_odometry.resetPosition(Rotation2d.fromDegrees(m_yawGetter.getValue()), m_modulePositions, pose);
-        } finally {
-            m_stateLock.writeLock().unlock();
-        }
-    }
-
-    public void resetOdo(Pose2d pose){
-        resetOdoUtil(pose);
-        resetOdoUtil(pose);
-        resetOdoUtil(pose);
-    }
+    //public void resetOdo(Pose2d pose){
+    //    resetOdoUtil(pose);
+    //    resetOdoUtil(pose);
+    //    resetOdoUtil(pose);
+    //}
 
     //@AutoLogOutput(key = "Swerve/Pose")
-    public Pose2d getPose(){
-        return instance.m_odometry.getEstimatedPosition();
-    }
+    //public Pose2d getPose(){
+    //    return instance.m_odometry.getEstimatedPosition();
+    //}
 
     public double robotAbsoluteVelocity(){
         double roughVel = 0.0;
@@ -136,14 +136,14 @@ public class CommandSwerveDriveTrain extends SwerveDrivetrain implements Subsyst
         // instance.Modules[0].apply(null, null);
     }
 
-    public void updateOdometryByVision(){
-        Pose3d poseFromVision = null;
-        if(poseFromVision != null){
-            //instance.m_odometry.addVisionMeasurement(poseFromVision.toPose2d(), Logger.getRealTimestamp()); //Timer.getFPGATimestamp()
-            //TODO: add our own timer
-        }
-       else { System.out.println("poseFromVision was null");}
-    }
+    //public void updateOdometryByVision(){
+    //    Pose3d poseFromVision = null;
+    //    if(poseFromVision != null){
+    //        //instance.m_odometry.addVisionMeasurement(poseFromVision.toPose2d(), Logger.getRealTimestamp()); //Timer.getFPGATimestamp()
+    //        //TODO: add our own timer
+    //    }
+    //   else { System.out.println("poseFromVision was null");}
+    //}
 
     private Pose2d autoStartPose = new Pose2d(2.0, 2.0, new Rotation2d());
 
