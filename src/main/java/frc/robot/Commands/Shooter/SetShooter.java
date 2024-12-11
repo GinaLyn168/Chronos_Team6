@@ -35,8 +35,7 @@ public class SetShooter extends Command {
 
     @Override
 	public boolean isFinished() {
-        double speeds = s_Shooter.getSpeed();
-        return Math.abs(speeds - velocity) < 3;
+        return true;
 	}
 		
 	@Override
