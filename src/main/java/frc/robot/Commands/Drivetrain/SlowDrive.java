@@ -38,6 +38,6 @@ public class SlowDrive extends Command {
 
     @Override
     public boolean isFinished() { //always use in WhileTrue
-        return true;
-    }
+        return false;
+    }   
 }
