@@ -59,7 +59,7 @@ public class Shooter {
     }
 
     public enum ShooterState {
-        SHOOT(1.0),
+        SHOOT(0.75),
         STANDBY(0.0);
 
         private double speed;

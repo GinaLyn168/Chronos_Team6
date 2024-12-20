@@ -84,7 +84,7 @@ public class RobotContainer {
 
     joystick.a().whileTrue(drivetrain.applyRequest(() -> brake));
     joystick.b().whileTrue(drivetrain
-        .applyRequest(() -> point.withModuleDirection(new Rotation2d(-joystick.getLeftY(), -joystick.getLeftX()))));
+        .applyRequest(() -> point.withModuleDirection(new Rotation2d(joystick.getLeftY(), joystick.getLeftX()))));
 
     driver.a().onTrue(new MoveIndexer(IndexerStates.ON, 1));
     driver.b().onTrue(new MoveIndexer(IndexerStates.REV, 1));
@@ -100,7 +100,7 @@ public class RobotContainer {
     driver.leftTrigger().whileTrue(new SlowDrive());
     
     // reset the field-centric heading on left bumper press
-    joystick.leftBumper().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldRelative()));
+    driver.rightTrigger().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldRelative()));
 
     if (Utils.isSimulation()) {
       drivetrain.seedFieldRelative(new Pose2d(new Translation2d(), Rotation2d.fromDegrees(90)));
